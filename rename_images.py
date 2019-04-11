@@ -4,23 +4,13 @@ import cv2
 
 ap = argparse.ArgumentParser()
 ap.add_argument('-src', '--source', required=True, help='source directory')
+ap.add_argument('-c', '--count', required=True, help='stating counting')
 args = vars(ap.parse_args())
 
 files = os.listdir(args['source'])
-newWidth = 100
-newHeight = 100
-M_height = 0
-M_width = 0
+start_count = int(args['count'])
+#print(start_count)
 
 for i,f in enumerate(files):
-    image = cv2.imread(f, cv2.CV_LOAD_IMAGE_COLOR)
-    height, width, depth = image.shape
-    M_height += height
-    M_width += width
-    #newImage = cv2.resize(img, (int(newHeight), int(newWidth)))
-    #cv2.imwrite(name, newImage)
-
-print("mean height: ", M_height/len(f))
-print("mean width: ", M_width/len(f))
-
-
+    new_name = str(i+start_count) + ".jpg"
+    os.rename(args['source'] + "/" + f, args['source'] + "/" + new_name)

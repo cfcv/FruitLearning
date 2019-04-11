@@ -11,8 +11,8 @@ ap.add_argument('-o', '--output', required=True, help='path to output directory'
 args = vars(ap.parse_args())
 
 API_KEY = 'a577206cbf7a42a2bdde19301569b54b'
-MAX_RESULTS = 100 #number of images
-GROUP_SIZE = 100 #images per page
+MAX_RESULTS = 200 #number of images
+GROUP_SIZE = 200 #images per page
 
 URL = "https://api.cognitive.microsoft.com/bing/v7.0/images/search"
 
