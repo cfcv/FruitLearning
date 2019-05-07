@@ -61,6 +61,7 @@ def test_similarity():
     lum_sum = tu.get_Luminance(img_sum)
     lum_aut = tu.get_Luminance(img_aut)
 
+    # LBP
     lbp_abr = tu.get_LBP(lum_abr)
     lbp_sum = tu.get_LBP(lum_sum)
     lbp_aut = tu.get_LBP(lum_aut)
@@ -69,12 +70,33 @@ def test_similarity():
     sim_abr_sum = tu.similarity(lbp_abr,lbp_sum)
     sim_abr_aut = tu.similarity(lbp_abr,lbp_aut)
     sim_aut_sum = tu.similarity(lbp_aut,lbp_sum)
-   
-    print("LBP :")
+
+    # Histogram
+    h_abr = tu.get_hist(img_abr)
+    h_sum = tu.get_hist(img_sum)
+    h_aut = tu.get_hist(img_aut)
+
+    h_sim_abr_abr = tu.similarity(h_abr,h_abr)
+    h_sim_abr_sum = tu.similarity(h_abr,h_sum)
+    h_sim_abr_aut = tu.similarity(h_abr,h_aut)
+    h_sim_aut_sum = tu.similarity(h_aut,h_sum)
+
+
+
+    print("--------------- LBP : ---------------")
     print("abr vs abr",sim_abr_abr)
     print("abr vs sum",sim_abr_sum)
     print("abr vs aut",sim_abr_aut)
     print("aut vs sum",sim_aut_sum)
+
+    print("")
+
+    print(" --------------- Histogram : ---------------")
+    print("abr vs abr",h_sim_abr_abr)
+    print("abr vs sum",h_sim_abr_sum)
+    print("abr vs aut",h_sim_abr_aut)
+    print("aut vs sum",h_sim_aut_sum)
+
 
 
 

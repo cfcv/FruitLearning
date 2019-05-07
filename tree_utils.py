@@ -42,7 +42,8 @@ def get_hist(img):
     #print(len(bins))
     #print("bins",bins)
     #print(np.amax(iQ))
-    return np.histogram(iQ, bins=bins, normalized=True)
+    hist, bin_hist = np.histogram(iQ.flatten(), bins=bins, density=True)
+    return np.reshape(hist, (1, len(hist)))
 
 def get_LBP(img):
     assert(len(img.shape) == 2)
