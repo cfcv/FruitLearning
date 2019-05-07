@@ -46,4 +46,23 @@ def get_hist(img):
 
 def get_LBP(img):
     assert(len(img.shape) == 2)
-    return feature.local_binary_pattern(img, 8, 2, method='ror')
+    lbp = feature.local_binary_pattern(img, 8, 2, method='ror')
+    lbp_hist, lbp_bins = np.histogram(lbp.flatten(), bins=64, density=True)
+    return np.reshape(lbp_hist, (1, len(lbp_hist)))
+
+# Find the intersection between two histograms
+# input : two histograms
+# output : intersection of two histograms : list of minimum elements between each list
+def minH(h1i,h2i):
+    h1,h2 = h1i,h2i
+    h = [h1[i] if h1[i] < h2[i] else h2[i] for i in range(len(h1))]
+    return h
+
+# Mesure the similarity between two images by calculating their distance
+# input : histogram of each image
+# output : distance between the two images
+def similarity(h1i,h2i):
+    h1,h2 = list(h1i[0]),list(h2i[0])
+    assert (len(h1) == len(h2)), "Histogram's length does not match"
+    sim = 1 - (sum(minH(h1,h2)))/(min(sum(h1),sum(h2)))
+    return sim
