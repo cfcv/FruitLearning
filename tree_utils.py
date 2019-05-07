@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from skimage import feature
+import random
 
 #Cchange the colorspace from BGR to HSV
 # input: img in the BGR colorspace
@@ -31,7 +32,7 @@ def get_hist(img):
 
     iQ = np.zeros(r.shape)
     #iQ = np.floor(iQ/n_bins)
-    print("shape:", iQ.shape)
+    # print("shape:", iQ.shape)
     iQ = r + n*g + n*n*b
 
     maximum_channel = int(np.floor(255.0/n_bins))
@@ -64,6 +65,34 @@ def minH(h1i,h2i):
 # output : distance between the two images
 def similarity(h1i,h2i):
     h1,h2 = list(h1i[0]),list(h2i[0])
-    assert (len(h1) == len(h2)), "Histogram's length does not match"
+    assert (len(h1) == len(h2)), "Histogram's lengths do not match"
     sim = 1 - (sum(minH(h1,h2)))/(min(sum(h1),sum(h2)))
     return sim
+
+
+# Weighted sum of distances between two images
+# input : list of signatures for each image and the list of weight for each signature
+# output : distance between two images
+def distance(signatures1,signatures2,sig_coef):
+    assert (len(signatures1) == len(sig_coef) and (len(signatures2) == len(sig_coef)) ), "signatures and coef lengths do not match"
+    distances = [-1 for i in range(len(signatures1))]
+    # Creation of distance's list for each signature 
+    for i in range(len(signatures1)):
+        distances[i] = similarity(signatures1[i],signatures2[i])
+    # Weighting of distances
+    dist = 0
+    for i in range(len(distances)):
+        dist = dist + distances[i]*sig_coef[i]
+    return dist
+
+# Create a list of configurations to use in the learning
+# input : total number of images and the k-cross validation number
+# output : give a list of indexes composed of k configuration. Each configuration is composed of a training part and a test part
+def get_configuration(nb_img,k):
+    index = [i for i in range(nb_img)]
+    random.shuffle(index)
+    nb_int = int(np.floor(nb_img/k))
+    train_test = [[] for i in range(k)]
+    for i in range(k):
+        train_test[i] = [index[nb_int*i:nb_int*(i+1)],index[:nb_int*i]+index[nb_int*(i+1):]]
+    return train_test

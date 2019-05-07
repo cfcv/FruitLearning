@@ -52,7 +52,7 @@ def test_get_LBP():
     print(np.histogram(lbp.flatten(), bins=64))
 
 
-def test_similarity():
+def test_distance():
     img_abr = cv2.imread("../FruitLearning/Resources/test/abricotier_test.jpg")
     img_sum = cv2.imread("../FruitLearning/Resources/test/summer_test.jpg")
     img_aut = cv2.imread("../FruitLearning/Resources/test/autumn_test.jpg")
@@ -66,37 +66,37 @@ def test_similarity():
     lbp_sum = tu.get_LBP(lum_sum)
     lbp_aut = tu.get_LBP(lum_aut)
 
-    sim_abr_abr = tu.similarity(lbp_abr,lbp_abr)
-    sim_abr_sum = tu.similarity(lbp_abr,lbp_sum)
-    sim_abr_aut = tu.similarity(lbp_abr,lbp_aut)
-    sim_aut_sum = tu.similarity(lbp_aut,lbp_sum)
+    # sim_abr_abr = tu.similarity(lbp_abr,lbp_abr)
+    # sim_abr_sum = tu.similarity(lbp_abr,lbp_sum)
+    # sim_abr_aut = tu.similarity(lbp_abr,lbp_aut)
+    # sim_aut_sum = tu.similarity(lbp_aut,lbp_sum)
 
     # Histogram
     h_abr = tu.get_hist(img_abr)
     h_sum = tu.get_hist(img_sum)
     h_aut = tu.get_hist(img_aut)
 
-    h_sim_abr_abr = tu.similarity(h_abr,h_abr)
-    h_sim_abr_sum = tu.similarity(h_abr,h_sum)
-    h_sim_abr_aut = tu.similarity(h_abr,h_aut)
-    h_sim_aut_sum = tu.similarity(h_aut,h_sum)
+
+    print(" --------------- Distance : ---------------")
+
+    sig_abr = [lbp_abr,h_abr]
+    sig_aut = [lbp_aut,h_aut]
+    sig_sum = [lbp_sum,h_sum]
+    coef_sig = [0.2,0.8]
+
+    dist_abr_sum = tu.distance(sig_abr,sig_sum,coef_sig)
+    dist_abr_aut = tu.distance(sig_abr,sig_aut,coef_sig)
+    dist_sum_aut = tu.distance(sig_sum,sig_aut,coef_sig)
+
+    print("Distance abr_sum", dist_abr_sum)
+    print("Distance abr_aut", dist_abr_aut)
+    print("Distance sum_aut", dist_sum_aut)
 
 
-
-    print("--------------- LBP : ---------------")
-    print("abr vs abr",sim_abr_abr)
-    print("abr vs sum",sim_abr_sum)
-    print("abr vs aut",sim_abr_aut)
-    print("aut vs sum",sim_aut_sum)
-
-    print("")
-
-    print(" --------------- Histogram : ---------------")
-    print("abr vs abr",h_sim_abr_abr)
-    print("abr vs sum",h_sim_abr_sum)
-    print("abr vs aut",h_sim_abr_aut)
-    print("aut vs sum",h_sim_aut_sum)
-
+def test_get_config(img_size,k):
+    config = tu.get_configuration(img_size,k)
+    print("Get configuration test : img_size = ",img_size," k = ",k)
+    print(config)
 
 
 
@@ -104,7 +104,8 @@ TO_HSV_TEST = False
 GET_LUMINANCE_TEST = False
 GET_HIST_TEST = False
 GET_LBP_TEST = False
-SIMILARITY_TEST = True
+DISTANCE_TEST = True
+GET_CONFIG_TEST = False
 
 if(TO_HSV_TEST):
     test_TO_HSV()
@@ -114,7 +115,10 @@ elif(GET_HIST_TEST):
     test_get_hist()
 elif(GET_LBP_TEST):
     test_get_LBP()
-elif(SIMILARITY_TEST):
-    test_similarity()
+elif(DISTANCE_TEST):
+    test_distance()
+elif(GET_CONFIG_TEST):
+    img_size, k = 100, 5
+    test_get_config(img_size,k)
 
 
