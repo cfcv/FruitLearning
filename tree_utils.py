@@ -46,6 +46,9 @@ def get_hist(img):
     hist, bin_hist = np.histogram(iQ.flatten(), bins=bins, density=True)
     return np.reshape(hist, (1, len(hist)))
 
+# Get the lbp pattern from the channel passed as argument
+# input: image 2D, in this case we are using luminance
+# output: histogram with the lbp features
 def get_LBP(img):
     assert(len(img.shape) == 2)
     lbp = feature.local_binary_pattern(img, 8, 2, method='ror')
