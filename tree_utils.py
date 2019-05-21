@@ -91,11 +91,20 @@ def distance(signatures1,signatures2,sig_coef):
 # Create a list of configurations to use in the learning
 # input : total number of images and the k-cross validation number
 # output : give a list of indexes composed of k configuration. Each configuration is composed of a training part and a test part
-def get_configuration(nb_img,k):
+def get_k_cross_configuration(nb_img,k):
     index = [i for i in range(nb_img)]
     random.shuffle(index)
     nb_int = int(np.floor(nb_img/k))
     train_test = [[] for i in range(k)]
     for i in range(k):
         train_test[i] = [index[nb_int*i:nb_int*(i+1)],index[:nb_int*i]+index[nb_int*(i+1):]]
+    return train_test
+
+def get_nn_configuration(nb_img):
+    train_test = [[] for i in range(nb_img)]
+    for i in range(nb_img):
+        index_without_i = [i for i in range(nb_img)]
+        index_without_i.remove(i)
+        # random.shuffle(index_without_i)
+        train_test[i] = [[i],index_without_i]
     return train_test

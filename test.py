@@ -93,9 +93,14 @@ def test_distance():
     print("Distance sum_aut", dist_sum_aut)
 
 
-def test_get_config(img_size,k):
-    config = tu.get_configuration(img_size,k)
-    print("Get configuration test : img_size = ",img_size," k = ",k)
+def test_get_k_cross_config(img_size,k):
+    config = tu.get_k_cross_configuration(img_size,k)
+    print("Get k-cross configuration test : img_size = ",img_size," k = ",k)
+    print(config)
+
+def test_get_NN_config(img_size):
+    config = tu.get_nn_configuration(img_size)
+    print("Get NN configuration test : img_size = ",img_size)
     print(config)
 
 
@@ -103,9 +108,11 @@ def test_get_config(img_size,k):
 TO_HSV_TEST = False
 GET_LUMINANCE_TEST = False
 GET_HIST_TEST = False
-GET_LBP_TEST = True
+GET_LBP_TEST = False
 DISTANCE_TEST = False
-GET_CONFIG_TEST = False
+GET_K_CROSS_CONFIG_TEST = False
+GET_NN_CONFIG_TEST = True
+
 
 if(TO_HSV_TEST):
     test_TO_HSV()
@@ -117,8 +124,11 @@ elif(GET_LBP_TEST):
     test_get_LBP()
 elif(DISTANCE_TEST):
     test_distance()
-elif(GET_CONFIG_TEST):
-    img_size, k = 100, 5
-    test_get_config(img_size,k)
+elif(GET_K_CROSS_CONFIG_TEST):
+    img_size, k = 910,910 
+    test_get_k_cross_config(img_size,k)
+elif(GET_NN_CONFIG_TEST):
+    img_size = 910
+    test_get_NN_config(img_size)
 
 
