@@ -42,7 +42,7 @@ def test_get_hist():
     #print(np.sum(h))
 
 def test_get_LBP():
-    img_bgr = cv2.imread("../FruitLearning/dataset/abricotier_test.jpg")
+    img_bgr = cv2.imread("../FruitLearning/Resources/database/autumn/481.png")
     #img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
     Y = tu.get_Luminance(img_bgr)
     lbp = tu.get_LBP(Y)
@@ -103,8 +103,8 @@ def test_get_config(img_size,k):
 TO_HSV_TEST = False
 GET_LUMINANCE_TEST = False
 GET_HIST_TEST = False
-GET_LBP_TEST = False
-DISTANCE_TEST = True
+GET_LBP_TEST = True
+DISTANCE_TEST = False
 GET_CONFIG_TEST = False
 
 if(TO_HSV_TEST):

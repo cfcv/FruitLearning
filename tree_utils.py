@@ -52,7 +52,7 @@ def get_hist(img):
 def get_LBP(img):
     assert(len(img.shape) == 2)
     lbp = feature.local_binary_pattern(img, 8, 2, method='ror')
-    lbp_hist, lbp_bins = np.histogram(lbp.flatten(), bins=64, density=True)
+    lbp_hist, lbp_bins = np.histogram(lbp.flatten(), bins=255, density=True)
     return np.reshape(lbp_hist, (1, len(lbp_hist)))
 
 # Find the intersection between two histograms
